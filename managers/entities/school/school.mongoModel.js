@@ -25,9 +25,6 @@ const schoolSchema = new Schema({
             required: true
         }
     },
-    numberOfStudents: {
-        type: Number
-    }
 }, { timestamps: true });
 
 

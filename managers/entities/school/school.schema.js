@@ -1,26 +1,60 @@
-const { model } = require("mongoose");
-
-
 module.exports = {
-    createUser: [
+    createSchool: [
         {
-            label: "username",
-            path: "username",
-            model: 'username',
+            label: "name",
+            path: "name",
+            model: 'name',
             required: true,
         },
         {
-            label: "password",
-            path: "password",
-            model: 'password',
+            label: "address",
+            path: "address",
+            model: 'address',
+            required: true,
+        },
+
+    ],
+    updateSchool: [
+        {
+            label: "name",
+            path: "name",
+            model: 'name',
             required: true,
         },
         {
-            label: "role",
-            path: "role",
-            model: 'role',
+            label: "address",
+            path: "address",
+            model: 'address',
             required: true,
-        }
+        },
+        {
+            label: "id",
+            path: "id",
+            model: 'mongoId',
+            required: true,
+        },
+
+        
+    ],
+    deleteSchool: [
+        {
+            label: "id",
+            path: "id",
+            model: 'mongoId',
+            required: true,
+        },
+
+        
+    ],
+    getSchool: [
+        {
+            label: "id",
+            path: "id",
+            model: 'mongoId',
+            required: true,
+        },
+
+        
     ],
 }
 

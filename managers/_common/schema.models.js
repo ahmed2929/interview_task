@@ -4,7 +4,7 @@ module.exports = {
     id: {
         path: "id",
         type: "string",
-        length: { min: 1, max: 50 },
+        length: { min: 24, max: 24 },
     },
     username: {
         path: 'username',
@@ -106,4 +106,31 @@ module.exports = {
         type: 'String',
         enum: ['student', 'superAdmin', 'schoolAdmin'],
     },
+    address:{
+        street: {
+            type: 'String',
+            length: {min: 3, max: 100}
+        },
+        city: {
+            type: 'String',
+            length: {min: 3, max: 100}
+        },
+        state: {
+            type: 'String',
+            length: {min: 2, max: 2}
+        },
+        zipCode: {
+            type: 'String',
+            length: {min: 5, max: 5}
+        }
+    },
+    name: {
+        type: 'String',
+        length: {min: 3, max: 100}
+    },
+    mongoId:{
+        type: 'String',
+        length: 24
+    }
+    
 }
