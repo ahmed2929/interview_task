@@ -12,29 +12,30 @@ module.exports = class User {
 
     }
 
-    async create({name, address, __longToken}){
+    async create({name, capacity,schoolId, __longToken}){
         try {
-            console.log('create school***************',this.validators)
             const userRole = __longToken?.role;
             if(!userRole) return {error: 'Role not found', status: 400, ok: false};
             //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-            const school = {name, address};
-            console.log('create school***************',school)
-            let result = await this.validators.school.createSchool(school);
+            const classroom = {name, capacity, schoolId};
+            let result = await this.validators.classroom.createClassRoom(classroom);
             if(result) return result;
 
             // Check if exists
-            let exists = await this.mongomodels.school.findOne({name});
-            if(exists) return {error: 'school already exists', status: 409,ok: false};
-            
+            let exists = await this.mongomodels.classroom.findOne({name});
+            if(exists) return {error: 'classroom already exists', status: 409,ok: false};
+            // check for school
+            const school=await this.mongomodels.school.findById(schoolId)
+            if(!school) return {error: 'school not found', status: 404,ok: false};
             // Creation Logic
-            let createdSchool     = await this.mongomodels.school.create({name,address})            
+            let createdClassroom    = await this.mongomodels.classroom.create({name,capacity,schoolId})            
             // Response
             return {
-                school: {
-                    name: createdSchool.username,
-                    address: createdSchool.address,
-                    id: createdSchool._id
+                classroom: {
+                    name: createdClassroom.name,
+                    capacity: createdClassroom.capacity,
+                    id: createdClassroom._id,
+                    schoolId: createdClassroom.schoolId
                 } 
             };
         } catch (error) {
@@ -43,33 +44,33 @@ module.exports = class User {
         }
      
     }
-    async update({name, address,id, __longToken}){
+    async update({name, capacity,id,schoolId, __longToken}){
         try {
             const userRole = __longToken?.role;
             if(!userRole) return {error: 'Role not found', status: 400, ok: false};
             //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-            const school = {name, address,id};
-
-            let result = await this.validators.school.updateSchool(school);
+            const classroom = {name, capacity, schoolId,id};
+            let result = await this.validators.classroom.updateClassroom(classroom);
             if(result) return result;
-
+            const classExists=await this.mongomodels.classroom.findById(id)
+            if(!classExists) return {error: 'classroom not found', status: 404,ok: false};
             // Check if exists
-            let exists = await this.mongomodels.school.findById(id);
-            if(!exists) return {error: 'school not found', status: 404,ok: false};
-
-            let schoolExists = await this.mongomodels.school.findOne({ name, _id: { $ne: id } });
-            if (schoolExists) return { error: 'school with this name already exists', status: 409, ok: false };
-            
+            let exists = await this.mongomodels.classroom.findOne({name, _id: {$ne: id}});
+            if(exists) return {error: 'classroom already exists', status: 409,ok: false};
+            // check for school
+            const school=await this.mongomodels.school.findById(schoolId)
+            if(!school) return {error: 'school not found', status: 404,ok: false};
             // Creation Logic
-            let School     = await this.mongomodels.school.findByIdAndUpdate(id,
-                { name, address },
-               )            
+            let createdClassroom    = await this.mongomodels.classroom.findByIdAndUpdate(id,
+                { name, capacity ,schoolId},
+               )          
             // Response
             return {
-                school: {
-                    name: School.name,
-                    address: School.address,
-                    id: School._id
+                classroom: {
+                    name: createdClassroom.name,
+                    capacity: createdClassroom.capacity,
+                    id: createdClassroom._id,
+                    schoolId: createdClassroom.schoolId
                 } 
             };
         } catch (error) {
@@ -78,25 +79,26 @@ module.exports = class User {
         }
      
     }
-    async delete({id, __longToken}){
+    async delete({__query, __longToken}){
         try {
+            const id = __query.id;
             const userRole = __longToken?.role;
             if(!userRole) return {error: 'Role not found', status: 400, ok: false};
             //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-            const school = {id};
+            const classroom = {id};
 
-            let result = await this.validators.school.deleteSchool(school);
+            let result = await this.validators.classroom.deleteClassroom(classroom);
             if(result) return result;
 
             // Check if exists
-            let exists = await this.mongomodels.school.findById(id);
+            let exists = await this.mongomodels.classroom.findById(id);
             if(!exists) return {error: 'school not found', status: 404,ok: false};
             
             // Creation Logic
-            let School     = await this.mongomodels.school.findByIdAndDelete(id)            
+            let deletedClassroom = await this.mongomodels.classroom.findByIdAndDelete(id)            
             // Response
             return {
-                School
+                classroom:deletedClassroom
             };
         } catch (error) {
             console.log(error)
@@ -107,21 +109,20 @@ module.exports = class User {
     async getByID({__longToken, __query}){
         try {
             const id = __query.id;
-            console.log('getByID',id)
             const userRole = __longToken?.role;
             if(!userRole) return {error: 'Role not found', status: 400, ok: false};
             //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-            const school = {id};
+            const classroom = {id};
 
-            let result = await this.validators.school.getSchool(school);
+            let result = await this.validators.classroom.getClassroom(classroom);
             if(result) return result;
 
             // Check if exists
-            let School = await this.mongomodels.school.findById(id);
-            if(!School) return {error: 'school not found', status: 404,ok: false};
+            let classroomExists = await this.mongomodels.classroom.findById(id);
+            if(!classroomExists) return {error: 'classroom not found', status: 404,ok: false};
             
             return {
-                School
+                classroom: classroomExists
             };
         } catch (error) {
             console.log(error)
@@ -136,9 +137,9 @@ module.exports = class User {
             //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
 
             // Check if exists
-            let schools = await this.mongomodels.school.find({});            
+            let classrooms = await this.mongomodels.classroom.find({});            
             return {
-                schools
+                classrooms
             };
         } catch (error) {
             console.log(error)

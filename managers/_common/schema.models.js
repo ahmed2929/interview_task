@@ -131,6 +131,10 @@ module.exports = {
     mongoId:{
         type: 'String',
         length: 24
-    }
+    },
+    capacity: {
+        type: 'Number',
+        min: 1,
+    },
     
 }
