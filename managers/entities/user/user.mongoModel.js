@@ -17,6 +17,10 @@ const userSchema = new Schema({
         type: String,
         enum: ['student', 'superAdmin', 'schoolAdmin'],
         required: true
+    },
+    school: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School'
     }
 });
 

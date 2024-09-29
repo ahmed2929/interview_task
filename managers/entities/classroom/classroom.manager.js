@@ -6,17 +6,18 @@ module.exports = class User {
         this.validators          = validators; 
         this.mongomodels         = mongomodels;
         this.tokenManager        = managers.token;
-         this.userExposed         = ['create'];
-         this.httpExposed         = ["post=create","put=update","delete=delete","get=getByID","get=getAll"];
+        this.userExposed         = ['create'];
+        this.httpExposed         = ["post=create","put=update","delete=delete","get=getByID","get=getAll"];
         this.name                = "school";
+        this.managers            = managers;
 
     }
 
     async create({name, capacity,schoolId, __longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'create', resource: 'classroom'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {name, capacity, schoolId};
             let result = await this.validators.classroom.createClassRoom(classroom);
             if(result) return result;
@@ -47,8 +48,8 @@ module.exports = class User {
     async update({name, capacity,id,schoolId, __longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'update', resource: 'classroom'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {name, capacity, schoolId,id};
             let result = await this.validators.classroom.updateClassroom(classroom);
             if(result) return result;
@@ -83,8 +84,8 @@ module.exports = class User {
         try {
             const id = __query.id;
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'delete', resource: 'classroom'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {id};
 
             let result = await this.validators.classroom.deleteClassroom(classroom);
@@ -109,9 +110,11 @@ module.exports = class User {
     async getByID({__longToken, __query}){
         try {
             const id = __query.id;
+
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'classroom'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
+          
             const classroom = {id};
 
             let result = await this.validators.classroom.getClassroom(classroom);
@@ -133,9 +136,8 @@ module.exports = class User {
     async getAll({__longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'classroom'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             // Check if exists
             let classrooms = await this.mongomodels.classroom.find({});            
             return {

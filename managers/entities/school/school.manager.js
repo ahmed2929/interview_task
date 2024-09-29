@@ -1,4 +1,4 @@
-module.exports = class User { 
+module.exports = class SchoolManager { 
 
     constructor({utils, cache, config, cortex, managers, validators, mongomodels }={}){
         this.config              = config;
@@ -6,18 +6,17 @@ module.exports = class User {
         this.validators          = validators; 
         this.mongomodels         = mongomodels;
         this.tokenManager        = managers.token;
-         this.userExposed         = ['create'];
-         this.httpExposed         = ["post=create","put=update","delete=delete","get=getByID","get=getAll"];
+        this.httpExposed         = ["post=create","put=update","delete=delete","get=getByID","get=getAll"];
         this.name                = "school";
+        this.managers            = managers;
 
     }
 
     async create({name, address, __longToken}){
         try {
-            console.log('create school***************',this.validators)
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'create', resource: 'school'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const school = {name, address};
             console.log('create school***************',school)
             let result = await this.validators.school.createSchool(school);
@@ -46,8 +45,8 @@ module.exports = class User {
     async update({name, address,id, __longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'update', resource: 'school'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const school = {name, address,id};
 
             let result = await this.validators.school.updateSchool(school);
@@ -81,8 +80,8 @@ module.exports = class User {
     async delete({id, __longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'delete', resource: 'school'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const school = {id};
 
             let result = await this.validators.school.deleteSchool(school);
@@ -107,10 +106,9 @@ module.exports = class User {
     async getByID({__longToken, __query}){
         try {
             const id = __query.id;
-            console.log('getByID',id)
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'school'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const school = {id};
 
             let result = await this.validators.school.getSchool(school);
@@ -132,9 +130,8 @@ module.exports = class User {
     async getAll({__longToken}){
         try {
             const userRole = __longToken?.role;
-            if(!userRole) return {error: 'Role not found', status: 400, ok: false};
-            //if(userRole !== 'superAdmin') return {error: 'Unauthorized', status: 401, ok: false};
-
+            const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'update', resource: 'school'});
+            if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             // Check if exists
             let schools = await this.mongomodels.school.find({});            
             return {
