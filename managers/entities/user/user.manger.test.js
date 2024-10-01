@@ -1,4 +1,4 @@
-const UserManager = require('./User.manager');
+const UserManager = require('./user.manager');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { mockRequest, mockResponse } = require('jest-mock-req-res');

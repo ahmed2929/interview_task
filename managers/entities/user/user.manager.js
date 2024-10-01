@@ -1,5 +1,20 @@
-module.exports = class User { 
+/**
+ * User manager class for handling user-related operations.
+ * @class
+ */
+class UserManager { 
 
+    /**
+     * Constructs a new User manager.
+     * @param {Object} options - The options for the User manager.
+     * @param {Object} options.utils - Utility functions.
+     * @param {Object} options.cache - Cache manager.
+     * @param {Object} options.config - Configuration settings.
+     * @param {Object} options.cortex - Cortex manager.
+     * @param {Object} options.managers - Other managers.
+     * @param {Object} options.validators - Validators.
+     * @param {Object} options.mongomodels - MongoDB models.
+     */
     constructor({utils, cache, config, cortex, managers, validators, mongomodels }={}){
         this.config              = config;
         this.cortex              = cortex;
@@ -12,6 +27,28 @@ module.exports = class User {
 
     }
 
+    /**
+     * Creates a new user in the system.
+     * 
+     * @param {Object} params - The parameters for creating a user.
+     * @param {string} params.username - The username of the new user.
+     * @param {string} params.password - The password of the new user.
+     * @param {string} params.role - The role of the new user.
+     * @param {string} [params.schoolId] - The ID of the school, required if the role is 'schoolAdmin'.
+     * @param {Object} params.__longToken - The token object containing user role information should be superAdmin.
+     * 
+     * @returns {Promise<Object>} The result of the user creation process.
+     * @returns {Object} [returns.error] - The error message if the creation fails.
+     * @returns {number} [returns.status] - The HTTP status code.
+     * @returns {boolean} [returns.ok] - The status of the operation.
+     * @returns {Object} [returns.user] - The created user information.
+     * @returns {string} returns.user.username - The username of the created user.
+     * @returns {string} returns.user.role - The role of the created user.
+     * @returns {string} returns.user.id - The ID of the created user.
+     * @returns {string} [returns.longToken] - The generated long token for the created user.
+     * 
+     * @throws {Error} Throws an error if the user creation process fails.
+     */
     async createUser({username, password,role,schoolId, __longToken}){
         try {
             const userRole = __longToken?.role;
@@ -51,6 +88,24 @@ module.exports = class User {
      
     }
 
+    /**
+     * Login a user with the provided username and password.
+     *
+     * @param {Object} credentials - The login credentials.
+     * @param {string} credentials.username - The username of the user.
+     * @param {string} credentials.password - The password of the user.
+     * @returns {Promise<Object>} The login result.
+     * @returns {Object} [result.user] - The user details if login is successful.
+     * @returns {string} result.user.username - The username of the user.
+     * @returns {string} result.user.role - The role of the user.
+     * @returns {string} result.user.id - The ID of the user.
+     * @returns {string} result.longToken - The long token generated for the user.
+     * @returns {Object} [result.error] - The error details if login fails.
+     * @returns {string} result.error.message - The error message.
+     * @returns {number} result.error.status - The HTTP status code.
+     * @returns {boolean} result.error.ok - The status of the operation.
+     * @throws {Error} If an error occurs during the login process.
+     */
     async login({username, password}){
         try {
             const user = {username, password};
@@ -81,3 +136,5 @@ module.exports = class User {
     }
 
 }
+
+module.exports = UserManager;

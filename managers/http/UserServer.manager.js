@@ -19,7 +19,7 @@ module.exports = class UserServer {
         app.use(cors({origin: '*'}));
         app.use(express.json());
         app.use(express.urlencoded({ extended: true}));
-        app.use('/static', express.static('public'));
+        app.use('/docs', express.static('docs'));
 
         /** an error handler */
         app.use((err, req, res, next) => {

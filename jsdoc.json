@@ -1,0 +1,12 @@
+{
+    "source": {
+        "include": ["./managers/entities"],
+        "exclude": ["node_modules"],
+        "includePattern": ".+\\.manager\\.js$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "destination": "./docs",
+        "recurse": true
+    }
+}
