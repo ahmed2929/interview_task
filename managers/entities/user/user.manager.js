@@ -54,6 +54,7 @@ class UserManager {
             const userRole = __longToken?.role;
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'create', resource: 'user'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
+            if(role !== 'superAdmin' && role !== 'schoolAdmin' ) return {error: 'Invalid role', status: 400, ok: false}
             const user = {username, password, role,schoolId};
 
             let result = await this.validators.user.createUser(user);
@@ -77,7 +78,8 @@ class UserManager {
                 user: {
                     username: createdUser.username,
                     role: createdUser.role,
-                    id: createdUser._id
+                    id: createdUser._id,
+                    schoolId: createdUser.school
                 }, 
                 longToken 
             };
@@ -124,7 +126,8 @@ class UserManager {
                 user: {
                     username: userExists.username,
                     role: userExists.role,
-                    id: userExists._id
+                    id: userExists._id,
+                    schoolId: userExists.school
                 }, 
                 longToken 
             };

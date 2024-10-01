@@ -29,7 +29,14 @@ module.exports = {
             path: "password",
             model: 'password',
             required: true,
-        }
+        },
+        {
+            label: "schoolId",
+            path: "schoolId",
+            model: 'mongoId',
+            required: true,
+        },
+    
     ],
     updateStudent: [
         {
