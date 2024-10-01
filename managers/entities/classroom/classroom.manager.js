@@ -1,3 +1,5 @@
+const ROLES = require('../../../helpers/roles');
+
 /**
  * The Classroom class is responsible for managing classroom operations.
  * @class
@@ -41,6 +43,8 @@ class ClassroomManager {
             const userRole = __longToken?.role;
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'create', resource: 'classroom'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
+            //in case of schoolAdmin, check if the schoolId is same as the schoolId of the schoolAdmin
+            if(userRole===ROLES.SCHOOL_ADMIN && schoolId!==__longToken.schoolId) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {name, capacity, schoolId};
             let result = await this.validators.classroom.createClassRoom(classroom);
             if(result) return result;
@@ -51,6 +55,7 @@ class ClassroomManager {
             // check for school
             const school=await this.mongomodels.school.findById(schoolId)
             if(!school) return {error: 'school not found', status: 404,ok: false};
+
             // Creation Logic
             let createdClassroom    = await this.mongomodels.classroom.create({name,capacity,schoolId})            
             // Response
@@ -94,6 +99,8 @@ class ClassroomManager {
             const userRole = __longToken?.role;
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'update', resource: 'classroom'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
+            //in case of schoolAdmin, check if the schoolId is same as the schoolId of the schoolAdmin
+            if(userRole===ROLES.SCHOOL_ADMIN && schoolId!==__longToken.schoolId) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {name, capacity, schoolId,id};
             let result = await this.validators.classroom.updateClassroom(classroom);
             if(result) return result;
@@ -152,7 +159,9 @@ class ClassroomManager {
 
             // Check if exists
             let exists = await this.mongomodels.classroom.findById(id);
-            if(!exists) return {error: 'school not found', status: 404,ok: false};
+            if(!exists) return {error: 'classroom not found', status: 404,ok: false};
+            //in case of schoolAdmin, check if the schoolId is same as the schoolId of the schoolAdmin
+            if(userRole===ROLES.SCHOOL_ADMIN && exists.schoolId!==__longToken.schoolId) return {error: 'Unauthorized', status: 401, ok: false};
             // if students are there in the classroom prevent deletion
             let students = await this.mongomodels.student.find({classroomId: id});
             if(students?.length) return {error: 'classroom has students, cannot delete', status: 409,ok: false};
@@ -186,7 +195,8 @@ class ClassroomManager {
             const userRole = __longToken?.role;
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'classroom'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
-          
+            //in case of schoolAdmin, check if the schoolId is same as the schoolId of the schoolAdmin
+            if(userRole===ROLES.SCHOOL_ADMIN && id!==__longToken.schoolId) return {error: 'Unauthorized', status: 401, ok: false};
             const classroom = {id};
 
             let result = await this.validators.classroom.getClassroom(classroom);
@@ -195,7 +205,8 @@ class ClassroomManager {
             // Check if exists
             let classroomExists = await this.mongomodels.classroom.findById(id);
             if(!classroomExists) return {error: 'classroom not found', status: 404,ok: false};
-            
+            if(userRole===ROLES.SCHOOL_ADMIN && classroomExists.schoolId!==__longToken.schoolId) return {error: 'Unauthorized', status: 401, ok: false};
+
             return {
                 classroom: classroomExists
             };
@@ -219,7 +230,13 @@ class ClassroomManager {
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'classroom'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             // Check if exists
-            let classrooms = await this.mongomodels.classroom.find({});            
+            let classrooms;
+            if(userRole===ROLES.SCHOOL_ADMIN){
+                classrooms = await this.mongomodels.classroom.find({schoolId: __longToken.schoolId});
+            }else{
+                classrooms= await this.mongomodels.classroom.find({});    
+            }
+                        
             return {
                 classrooms
             };

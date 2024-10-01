@@ -43,6 +43,7 @@ describe('StudentManager', () => {
                 student: mongoose,
                 classroom: mongoose,
                 user: mongoose,
+                school: mongoose,
             },
         });
         req = mockRequest();

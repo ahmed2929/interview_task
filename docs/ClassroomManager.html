@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: SchoolManager</title>
+    <title>JSDoc: Class: ClassroomManager</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: SchoolManager</h1>
+    <h1 class="page-title">Class: ClassroomManager</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>SchoolManager<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>ClassroomManager<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">SchoolManager class for managing school entities.</div>
+            <div class="class-description">The Classroom class is responsible for managing classroom operations.</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="SchoolManager"><span class="type-signature"></span>new SchoolManager<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ClassroomManager"><span class="type-signature"></span>new ClassroomManager<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line5">line 5</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id="create"><span class="type-signature">(async) </span>create<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object|number|boolean|Object|string|string|string}</span></h4>
+    <h4 class="name" id="create"><span class="type-signature">(async) </span>create<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object|string|number|boolean|Object|string|number|string|string}</span></h4>
     
 
     
@@ -157,7 +157,7 @@
 
 
 <div class="description">
-    Creates a new school entity.
+    Creates a new classroom.
 </div>
 
 
@@ -209,7 +209,7 @@
 
             
 
-            <td class="description last">The parameters for creating a school.
+            <td class="description last">The parameters for creating a classroom.
                 <h6>Properties</h6>
                 
 
@@ -251,14 +251,37 @@
 
             
 
-            <td class="description last">The name of the school.</td>
+            <td class="description last">The name of the classroom.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>address</code></td>
+                <td class="name"><code>capacity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The capacity of the classroom.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>schoolId</code></td>
             
 
             <td class="type">
@@ -274,7 +297,7 @@
 
             
 
-            <td class="description last">The address of the school.</td>
+            <td class="description last">The ID of the school to which the classroom belongs.</td>
         </tr>
 
     
@@ -345,7 +368,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line36">line 36</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -372,11 +395,28 @@
 
         
 
-    <div class="param-desc">
-    
-        Will throw an error if the creation process fails.
-    
-    </div>
+<dl>
+    <dt>
+        <div class="param-desc">
+        If an error occurs during the creation process.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
 
 
     
@@ -386,7 +426,7 @@
 <ul>
         <li>
 <div class="param-desc">
-    The result of the creation process.
+    The result of the classroom creation.
 </div>
 
 
@@ -406,7 +446,7 @@
     
         <li>
 <div class="param-desc">
-    [returns.error] - Error message if creation fails.
+    [error] - The error object if the creation fails.
 </div>
 
 
@@ -426,7 +466,27 @@
     
         <li>
 <div class="param-desc">
-    [returns.status] - HTTP status code.
+    error.error - The error message.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    error.status - The HTTP status code.
 </div>
 
 
@@ -446,7 +506,7 @@
     
         <li>
 <div class="param-desc">
-    [returns.ok] - Status of the operation.
+    error.ok - The status of the operation.
 </div>
 
 
@@ -466,7 +526,7 @@
     
         <li>
 <div class="param-desc">
-    [returns.school] - The created school entity.
+    [classroom] - The created classroom object if the creation succeeds.
 </div>
 
 
@@ -486,7 +546,7 @@
     
         <li>
 <div class="param-desc">
-    returns.school.name - The name of the created school.
+    classroom.name - The name of the created classroom.
 </div>
 
 
@@ -506,7 +566,27 @@
     
         <li>
 <div class="param-desc">
-    returns.school.address - The address of the created school.
+    classroom.capacity - The capacity of the created classroom.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    classroom.id - The ID of the created classroom.
 </div>
 
 
@@ -526,7 +606,7 @@
     
         <li>
 <div class="param-desc">
-    returns.school.id - The ID of the created school.
+    classroom.schoolId - The ID of the school to which the created classroom belongs.
 </div>
 
 
@@ -555,7 +635,7 @@
     
 
     
-    <h4 class="name" id="delete"><span class="type-signature">(async) </span>delete<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    <h4 class="name" id="delete"><span class="type-signature">(async) </span>delete<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object|number|boolean|Object}</span></h4>
     
 
     
@@ -563,7 +643,7 @@
 
 
 <div class="description">
-    Deletes a school entity by its ID.
+    Deletes a classroom based on the provided query and authorization token.
 </div>
 
 
@@ -641,6 +721,48 @@
 
         <tr>
             
+                <td class="name"><code>__query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The query object containing the classroom ID.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
                 <td class="name"><code>id</code></td>
             
 
@@ -657,7 +779,14 @@
 
             
 
-            <td class="description last">The ID of the school to be deleted.</td>
+            <td class="description last">The ID of the classroom to be deleted.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -680,7 +809,7 @@
 
             
 
-            <td class="description last">The token containing user information.</td>
+            <td class="description last">The authorization token object.</td>
         </tr>
 
     
@@ -728,7 +857,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line128">line 128</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -755,19 +884,36 @@
 
         
 
-    <div class="param-desc">
-    
-        Will throw an error if the delete operation fails.
-    
-    </div>
+<dl>
+    <dt>
+        <div class="param-desc">
+        Throws an error if the delete operation fails.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
 
 
     
 
 
 <h5>Returns:</h5>
-
-        
+<ul>
+        <li>
 <div class="param-desc">
     The result of the delete operation.
 </div>
@@ -785,8 +931,88 @@
 
     </dd>
 </dl>
-
+</li>
     
+        <li>
+<div class="param-desc">
+    returns.error - Error message if the operation fails.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.status - HTTP status code.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.ok - Operation success status.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    [returns.classroom] - The deleted classroom object if the operation is successful.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
 
 
 
@@ -798,7 +1024,7 @@
     
 
     
-    <h4 class="name" id="getAll"><span class="type-signature">(async) </span>getAll<span class="signature">(param0)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    <h4 class="name" id="getAll"><span class="type-signature">(async) </span>getAll<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
     
 
     
@@ -806,7 +1032,7 @@
 
 
 <div class="description">
-    Retrieves all school entities based on the user's role and authorization.
+    Retrieves all classrooms.
 </div>
 
 
@@ -842,7 +1068,7 @@
 
         <tr>
             
-                <td class="name"><code>param0</code></td>
+                <td class="name"><code>param0.__longToken</code></td>
             
 
             <td class="type">
@@ -858,56 +1084,7 @@
 
             
 
-            <td class="description last">The parameter object.
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>__longToken</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The token containing user information.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">The token object containing user information.</td>
         </tr>
 
     
@@ -948,7 +1125,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line204">line 204</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -975,28 +1152,11 @@
 
         
 
-<dl>
-    <dt>
-        <div class="param-desc">
-        If an error occurs during the retrieval process.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
+    <div class="param-desc">
+    
+        Will throw an error if the operation fails.
+    
+    </div>
 
 
     
@@ -1006,7 +1166,7 @@
 
         
 <div class="param-desc">
-    The result object containing the list of schools or an error message.
+    The result object containing classrooms or an error message.
 </div>
 
 
@@ -1043,7 +1203,7 @@
 
 
 <div class="description">
-    Retrieves a school entity by its ID.
+    Retrieves a classroom by its ID.
 </div>
 
 
@@ -1160,7 +1320,7 @@
 
             
 
-            <td class="description last">The query object containing the school ID.
+            <td class="description last">The query parameters.
                 <h6>Properties</h6>
                 
 
@@ -1202,7 +1362,7 @@
 
             
 
-            <td class="description last">The ID of the school to retrieve.</td>
+            <td class="description last">The ID of the classroom to retrieve.</td>
         </tr>
 
     
@@ -1257,7 +1417,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line166">line 166</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line191">line 191</a>
     </li></ul></dd>
     
 
@@ -1284,11 +1444,28 @@
 
         
 
-    <div class="param-desc">
-    
-        Will throw an error if there is an issue with the retrieval process.
-    
-    </div>
+<dl>
+    <dt>
+        <div class="param-desc">
+        If an error occurs during the retrieval process.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
 
 
     
@@ -1298,7 +1475,7 @@
 
         
 <div class="param-desc">
-    The school entity if found, or an error object if not authorized or not found.
+    The result of the retrieval operation.
 </div>
 
 
@@ -1327,7 +1504,7 @@
     
 
     
-    <h4 class="name" id="update"><span class="type-signature">(async) </span>update<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object|string|string|string|Object|string|number|boolean}</span></h4>
+    <h4 class="name" id="update"><span class="type-signature">(async) </span>update<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>|Object|number|boolean|Object|string|number|string|string}</span></h4>
     
 
     
@@ -1335,7 +1512,7 @@
 
 
 <div class="description">
-    Updates a school entity with the provided details.
+    Updates a classroom with the provided details.
 </div>
 
 
@@ -1387,7 +1564,7 @@
 
             
 
-            <td class="description last">The parameters for updating the school.
+            <td class="description last">The parameters for updating the classroom.
                 <h6>Properties</h6>
                 
 
@@ -1429,20 +1606,20 @@
 
             
 
-            <td class="description last">The name of the school.</td>
+            <td class="description last">The name of the classroom.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>address</code></td>
+                <td class="name"><code>capacity</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
             
@@ -1452,7 +1629,7 @@
 
             
 
-            <td class="description last">The address of the school.</td>
+            <td class="description last">The capacity of the classroom.</td>
         </tr>
 
     
@@ -1475,7 +1652,30 @@
 
             
 
-            <td class="description last">The unique identifier of the school.</td>
+            <td class="description last">The ID of the classroom to update.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>schoolId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ID of the school the classroom belongs to.</td>
         </tr>
 
     
@@ -1498,7 +1698,7 @@
 
             
 
-            <td class="description last">The token containing user role information.</td>
+            <td class="description last">The token containing user authorization details.</td>
         </tr>
 
     
@@ -1546,7 +1746,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="school_school.manager.js.html">school/school.manager.js</a>, <a href="school_school.manager.js.html#line84">line 84</a>
+        <a href="classroom_classroom.manager.js.html">classroom/classroom.manager.js</a>, <a href="classroom_classroom.manager.js.html#line97">line 97</a>
     </li></ul></dd>
     
 
@@ -1576,7 +1776,7 @@
 <dl>
     <dt>
         <div class="param-desc">
-        Throws an error if the update operation fails.
+        If an error occurs during the update process.
         </div>
     </dt>
     <dd></dd>
@@ -1624,7 +1824,7 @@
     
         <li>
 <div class="param-desc">
-    result.school - The updated school details.
+    [returns.error] - The error message if the update fails.
 </div>
 
 
@@ -1644,107 +1844,7 @@
     
         <li>
 <div class="param-desc">
-    result.school.name - The name of the school.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-</li>
-    
-        <li>
-<div class="param-desc">
-    result.school.address - The address of the school.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-</li>
-    
-        <li>
-<div class="param-desc">
-    result.school.id - The unique identifier of the school.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-</li>
-    
-        <li>
-<div class="param-desc">
-    result.error - The error object if the update fails.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-    </dd>
-</dl>
-</li>
-    
-        <li>
-<div class="param-desc">
-    result.error.message - The error message.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-</li>
-    
-        <li>
-<div class="param-desc">
-    result.status - The HTTP status code.
+    [returns.status] - The HTTP status code.
 </div>
 
 
@@ -1764,7 +1864,7 @@
     
         <li>
 <div class="param-desc">
-    result.ok - The status of the operation.
+    [returns.ok] - The status of the operation.
 </div>
 
 
@@ -1776,6 +1876,106 @@
     <dd>
         
 <span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    [returns.classroom] - The updated classroom details.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.classroom.name - The name of the updated classroom.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.classroom.capacity - The capacity of the updated classroom.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.classroom.id - The ID of the updated classroom.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    returns.classroom.schoolId - The ID of the school the updated classroom belongs to.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
 
 
     </dd>

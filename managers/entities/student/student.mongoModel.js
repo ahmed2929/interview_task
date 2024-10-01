@@ -20,6 +20,11 @@ const studentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    schoolId: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
+    },
 }, {
     timestamps: true
 });

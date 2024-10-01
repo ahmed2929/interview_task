@@ -1,6 +1,7 @@
 const SchoolManager = require('./school.manager');
 const mongoose = require('mongoose');
 const { mockRequest, mockResponse } = require('jest-mock-req-res');
+const ROLES = require('../../../helpers/roles');
 
 jest.mock('mongoose', () => {
     const actualMongoose = jest.requireActual('mongoose');
@@ -51,6 +52,8 @@ describe('SchoolManager', () => {
     test('create - success', async () => {
         req.body = { name: 'Test School', address: { street: '123 Main St', city: 'Test City', state: 'TS', zipCode: '12345' }, __longToken: { role: 'superAdmin' } };
         mongoose.findOne.mockResolvedValue(null);
+        mongoose.findById.mockResolvedValue(null);
+
         mongoose.create.mockResolvedValue(req.body);
 
         const result = await schoolManager.create(req.body);

@@ -158,7 +158,7 @@ describe('ClassroomManager', () => {
 
         const result = await classroomManager.delete({ __query: req.query, __longToken: req.body.__longToken });
 
-        expect(result.error).toBe('school not found');
+        expect(result.error).toBe('classroom not found');
         expect(result.status).toBe(404);
     });
 
