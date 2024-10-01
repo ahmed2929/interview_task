@@ -6,7 +6,6 @@ module.exports = class User {
         this.validators          = validators; 
         this.mongomodels         = mongomodels;
         this.tokenManager        = managers.token;
-        this.userExposed         = ['create'];
         this.httpExposed         = ["post=create","put=update","delete=delete","get=getByID","get=getAll"];
         this.name                = "school";
         this.managers            = managers;
@@ -94,7 +93,9 @@ module.exports = class User {
             // Check if exists
             let exists = await this.mongomodels.classroom.findById(id);
             if(!exists) return {error: 'school not found', status: 404,ok: false};
-            
+            // if students are there in the classroom prevent deletion
+            let students = await this.mongomodels.student.find({classroomId: id});
+            if(students?.length) return {error: 'classroom has students, cannot delete', status: 409,ok: false};
             // Creation Logic
             let deletedClassroom = await this.mongomodels.classroom.findByIdAndDelete(id)            
             // Response

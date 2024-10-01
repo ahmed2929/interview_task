@@ -18,7 +18,6 @@ module.exports = class SchoolManager {
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'create', resource: 'school'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             const school = {name, address};
-            console.log('create school***************',school)
             let result = await this.validators.school.createSchool(school);
             if(result) return result;
 
@@ -31,7 +30,7 @@ module.exports = class SchoolManager {
             // Response
             return {
                 school: {
-                    name: createdSchool.username,
+                    name: createdSchool.name,
                     address: createdSchool.address,
                     id: createdSchool._id
                 } 
@@ -90,7 +89,9 @@ module.exports = class SchoolManager {
             // Check if exists
             let exists = await this.mongomodels.school.findById(id);
             if(!exists) return {error: 'school not found', status: 404,ok: false};
-            
+            // Check if school has classrooms prevent deletion
+            let classrooms = await this.mongomodels.classroom.find({schoolId: id});
+            if(classrooms?.length > 0) return {error: 'school has classrooms, cannot be deleted', status: 409,ok: false};
             // Creation Logic
             let School     = await this.mongomodels.school.findByIdAndDelete(id)            
             // Response
@@ -109,6 +110,10 @@ module.exports = class SchoolManager {
             const userRole = __longToken?.role;
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'read', resource: 'school'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
+            if(userRole === 'schoolAdmin'){
+                const schoolId = __longToken?.schoolId;
+                if(id !== schoolId) return {error: 'Unauthorized', status: 401, ok: false};
+            }
             const school = {id};
 
             let result = await this.validators.school.getSchool(school);
@@ -133,7 +138,14 @@ module.exports = class SchoolManager {
             const isAuthorized = this.managers.authorization.isAuthorized({userRole, action: 'update', resource: 'school'});
             if(!isAuthorized) return {error: 'Unauthorized', status: 401, ok: false};
             // Check if exists
-            let schools = await this.mongomodels.school.find({});            
+            let schools;
+            if(userRole === 'schoolAdmin'){
+                const schoolId = __longToken?.schoolId;
+                schools = await this.mongomodels.school.find({_id: schoolId});
+            }else{
+                schools = await this.mongomodels.school.find({});  
+            }
+                       
             return {
                 schools
             };

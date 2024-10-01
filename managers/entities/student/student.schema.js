@@ -19,9 +19,15 @@ module.exports = {
             required: true,
         },
         {
-            label: "schoolId",
-            path: "schoolId",
-            model: 'mongoId',
+            label: "username",
+            path: "username",
+            model: 'username',
+            required: true,
+        },
+        {
+            label: "password",
+            path: "password",
+            model: 'password',
             required: true,
         }
     ],
@@ -45,16 +51,16 @@ module.exports = {
             required: true,
         },
         {
-            label: "schoolId",
-            path: "schoolId",
-            model: 'mongoId',
-            required: true,
-        },
-        {
             label: "id",
             path: "id",
             model: 'mongoId',
             required: true,
+        },
+        {
+            label: "username",
+            path: "username",
+            model: 'username',
+            required: false,
         }
     ],
     deleteStudent: [

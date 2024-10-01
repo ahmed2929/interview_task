@@ -16,11 +16,10 @@ const studentSchema = new Schema({
         ref: 'Classroom',
         required: true
     },
-    schoolId: {
+    userId: {
         type: Schema.Types.ObjectId,
-        ref: 'School',
-        required: true
-    }
+        ref: 'User'
+    },
 }, {
     timestamps: true
 });

@@ -6,7 +6,8 @@ class AuthorizationManager {
             [ROLES.SUPER_ADMIN]: {
                 school: ['create', 'update', 'delete', 'read'],
                 classroom: ['create', 'update', 'delete', 'read'],
-                student: ['create', 'update', 'delete', 'read']
+                student: ['create', 'update', 'delete', 'read'],
+                user: ['create', 'update', 'delete', 'read']
             },
             [ROLES.SCHOOL_ADMIN]: {
                 school: ['read'],
