@@ -15,10 +15,10 @@ process.on('unhandledRejection', (reason, promise) => {
     process.exit(1)
 })
 
-const cache      = require('./cache/cache.dbh')({
-    prefix: config.dotEnv.CACHE_PREFIX ,
-    url: config.dotEnv.CACHE_REDIS
-});
+// const cache      = require('./cache/cache.dbh')({
+//     prefix: config.dotEnv.CACHE_PREFIX ,
+//     url: config.dotEnv.CACHE_REDIS
+// });
 
 const Oyster  = require('oyster-db');
 const oyster     = new Oyster({ 

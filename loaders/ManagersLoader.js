@@ -28,14 +28,14 @@ module.exports = class ManagersLoader {
         this.managers   = {};
         this.config     = config;
         this.cache      = cache;
-        this.cortex     = cortex;
+        //this.cortex     = cortex;
         
         this._preload();
         this.injectable = {
             utils,
             cache, 
             config,
-            cortex,
+         //   cortex,
             oyster,
             aeon,
             managers: this.managers, 
@@ -62,7 +62,7 @@ module.exports = class ManagersLoader {
 
     load() {
         this.managers.responseDispatcher  = new ResponseDispatcher();
-        this.managers.liveDb              = new LiveDB(this.injectable);
+     //   this.managers.liveDb              = new LiveDB(this.injectable);
         const middlewaresLoader           = new MiddlewaresLoader(this.injectable);
         const mwsRepo                     = middlewaresLoader.load();
         const { layers, actions }         = systemArch;
