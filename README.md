@@ -50,6 +50,7 @@ This repository contains the School Management API, built using the existing boi
   
 
 ### Notes 
+- please note that there may be a delay in the first response from the server because it sleeps after a certain amount of time 
 - the deployed version can be found at: https://interview-task-3n8n.onrender.com/
 - code level docs can be found: https://interview-task-3n8n.onrender.com/docs/
 - APIs docs can be found in the following Postman collection: https://drive.google.com/file/d/1DzIPoWHCmU4LPRgUiOJKJ7LToqWZQNHY/view?usp=sharing
